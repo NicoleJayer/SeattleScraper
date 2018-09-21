@@ -1,6 +1,6 @@
 // Dependencies
 var express = require("express");
-var expressHandlebars = require("express-handlebars");
+var exphbs = require("express-handlebars");
 var bodyParser = require("body-parser");
 var mongoose = require("mongoose");
 var path = require("path");
@@ -9,26 +9,34 @@ var path = require("path");
 var request = require("request");
 var cheerio = require("cheerio");
 
-// Initialize Express
-var app = express();
 
 //Define port
 var PORT = process.env.PORT || 3001
+
+// Initialize Express
+var app = express();
+
+// have every request go through router
+var router = express.Router();
+
+// Make public a static dir
+app.use(express.static(__dirname + "/public"));
+
+//handlebars setup
+app.engine("handlebars", exphbs({
+  defaultLayout: "main"
+}));
+app.set("view engine", "handlebars");
 
 //setup body bodyParser
 app.use(bodyParser.urlencoded({
   extended: false
 }));
 
-// have every request go through router
-var router = express.Router();
 app.use(router);
 
-// Make public a static dir
-app.use(express.static(__dirname + "/public"));
-
-// Set Handlebars.
-var exphbs = require("express-handlebars");
+//require routes file pass to our router object
+require("./config/routes")(router);
 
 //if deployed, use the deployed database. Otherwise use the local mongoHeadLines database
 var db = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadLines";
