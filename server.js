@@ -1,7 +1,7 @@
 // Dependencies
 var express = require("express");
+var expressHandlebars = require("express-handlebars");
 var bodyParser = require("body-parser");
-var logger = require("morgan");
 var mongoose = require("mongoose");
 var path = require("path");
 
@@ -13,9 +13,15 @@ var cheerio = require("cheerio");
 var app = express();
 
 //Define port
-var port = process.env.PORT || 3001
+var PORT = process.env.PORT || 3001
+
+//setup body bodyParser
+app.use(bodyParser.urlencoded({
+  extended: false
+}));
 
 // have every request go through router
+var router = express.Router();
 app.use(router);
 
 // Make public a static dir
