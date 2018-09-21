@@ -19,6 +19,9 @@ var app = express();
 // have every request go through router
 var router = express.Router();
 
+//require routes file pass to our router object
+require("./config/routes")(router);
+
 // Make public a static dir
 app.use(express.static(__dirname + "/public"));
 
@@ -34,9 +37,6 @@ app.use(bodyParser.urlencoded({
 }));
 
 app.use(router);
-
-//require routes file pass to our router object
-require("./config/routes")(router);
 
 //if deployed, use the deployed database. Otherwise use the local mongoHeadLines database
 var db = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadLines";
