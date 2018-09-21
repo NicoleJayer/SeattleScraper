@@ -15,20 +15,15 @@ var app = express();
 //Define port
 var port = process.env.PORT || 3001
 
-// Use morgan and body parser with our app
-app.use(logger("dev"));
-app.use(bodyParser.urlencoded({
-  extended: false
-}));
+// have every request go through router
+app.use(router);
 
 // Make public a static dir
-app.use(express.static("public"));
+app.use(express.static(__dirname + "/public"));
 
 // Set Handlebars.
 var exphbs = require("express-handlebars");
 
-app.engine("handlebars", exphbs({
-    defaultLayout: "main",
-    partialsDir: path.join(__dirname, "/views/layouts/partials")
-}));
-app.set("view engine", "handlebars");
+app.listen(PORT, function() {
+  console.log("Listening on port: " + PORT);
+})
