@@ -164,10 +164,26 @@ function handleNoteSave() {
 
   if (newNote) {
     noteData = {
-
-    }
+      _id: $(this).data("article")._id,
+      noteText: newNote
+    };
+    $.post("/api/notes", noteData).then(function() {
+      bootbox.hideAll();
+    });
   }
 }
 
+function handleNoteDelete() {
 
-})
+  var noteToDelete = $(this).data("_id");
+
+  $.ajax({
+    url: "/api/notes/" + noteToDelete,
+    method: "DELETE"
+  }).then(function() {
+    bootbox.hideAll();
+  });
+}
+
+
+});

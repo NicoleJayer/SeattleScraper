@@ -24,7 +24,7 @@ var scrape = function (cb) {
           articles.push(dataToAdd);
         }
       });
-      cb(artcles);
+      cb(articles);
     });
 };
 
