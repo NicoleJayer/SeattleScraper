@@ -3,19 +3,19 @@ var cheerio = require("cheerio");
 
 var scrape = function(cb) {
 
-  request("http://www.nytimes.com", function(err, res, body) {
+  request("http://mynorthwest.com/", function(err, res, body) {
 
     var $ = cheerio.load(body);
 
     var articles = [];
 
-    $(".theme-summary").each(function(i, element) {
+    $(".story").each(function(i, element) {
 
-      var head = $(this).children(".story-heading").text().trim();
+      var head = $(this).children("h3").text().trim();
 
-      var url = $(this).children(".story-heading").children("a").attr("href");
+      var url = $(this).children("h3").children("a").attr("href");
 
-      var sum = $(this).children(".summary").text().trim();
+      var sum = $(this).children(".tease").text().trim();
 
      if (head && sum && url) {
 
