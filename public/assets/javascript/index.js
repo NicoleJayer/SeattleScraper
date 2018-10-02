@@ -73,7 +73,7 @@ $(document).ready(function() {
     var articleToSave = $(this).parents(".panel").data();
     articleToSave.saved = true;
       $.ajax({
-      method: "PUT",
+      method: "GET",
       url: "/api/headlines",
       data: articleToSave
     }).then(function(data) {

@@ -2,12 +2,13 @@ var request = require("request");
 var cheerio = require("cheerio");
 
 var scrape = function(cb) {
-
+  var articles = [];
+  
   request("http://mynorthwest.com/", function(err, res, body) {
 
     var $ = cheerio.load(body);
 
-    var articles = [];
+   
 
     $(".story").each(function(i, element) {
 
@@ -34,8 +35,11 @@ var scrape = function(cb) {
       }
     });
 
-    cb(articles);
+  
   });
+
+  cb(articles);
+  console.log(articles);
 };
 
 module.exports = scrape;
